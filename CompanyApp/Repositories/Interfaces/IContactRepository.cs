@@ -10,6 +10,6 @@ namespace Repositories.Interfaces
     public interface IContactRepository : IGenericRepository<Contact>
     {
         Contact GetContactsWithCompanyAndCountry();
-        List<Contact> FilterContact(int countryId, int companyId);
+        List<Contact> FilterContact(int? countryId, int? companyId);
     }
 }

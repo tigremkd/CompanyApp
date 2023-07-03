@@ -18,14 +18,16 @@ namespace Services.Validators
                .MaximumLength(255)
                .WithMessage("{PropertyName} must not be longer than 255 characters");
 
-            RuleFor(c => c.Company)
+            RuleFor(c => c.CompanyId)
                 .NotNull()
-                .WithMessage("{PropertyName} must not be emtpy")
-                ;
+                .NotEmpty()
+                .WithMessage("{PropertyName} must not be emtpy");
 
-            RuleFor(c => c.Country)
+
+            RuleFor(c => c.CountryId)
                 .NotNull()
-                .WithMessage("{PropertyName} must not be emtpy"); ;
+                .NotEmpty()
+                .WithMessage("{PropertyName} must not be emtpy");
         }
     }
 }

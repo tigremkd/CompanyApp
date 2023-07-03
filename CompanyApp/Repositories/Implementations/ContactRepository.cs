@@ -18,15 +18,21 @@ namespace Repositories.Implementations
             _context = context;
         }
 
-        public List<Contact> FilterContact(int countryId, int companyId)
+        public List<Contact> FilterContact(int? countryId, int? companyId)
         {
-            //TODO:
+            var filteredContacts = _context.Contacts.AsQueryable();
 
-            var filteredContacts = _context.Contacts
-                                      .Where(c => c.Country.CountryId == countryId && c.Company.CompanyId == companyId)
-                                      .ToList();
+            if (countryId.HasValue)
+            {
+                filteredContacts = filteredContacts.Where(c => c.Country.CountryId == countryId);
+            }
 
-            return filteredContacts;
+            if (companyId.HasValue)
+            {
+                filteredContacts = filteredContacts.Where(c => c.Company.CompanyId == companyId);
+            }
+
+            return filteredContacts.ToList();
         }
 
         public Contact GetContactsWithCompanyAndCountry()

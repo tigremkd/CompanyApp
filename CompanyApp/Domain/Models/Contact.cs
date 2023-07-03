@@ -18,6 +18,14 @@ namespace Domain.Models
         [Required]
         [MaxLength(255)]
         public string ContactName { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Company))]
+        public int CompanyId { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Country))]
+        public int CountryId { get; set; }
         public  Company Company { get; set; }
         public  Country Country { get; set; }
     }

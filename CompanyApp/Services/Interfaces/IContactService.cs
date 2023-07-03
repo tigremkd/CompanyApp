@@ -15,6 +15,6 @@ namespace Services.Interfaces
         CompanyDto UpdateContact(ContactDto contact);
         void DeleteContact(int id);
         ContactDto GetContactsWithCompanyAndCountry();
-        List<ContactDto> FilterContacts(int countryId, int companyId);
+        List<ContactDto> FilterContacts(int? countryId, int? companyId);
     }
 }

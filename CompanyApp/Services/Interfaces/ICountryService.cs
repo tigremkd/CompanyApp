@@ -11,7 +11,7 @@ namespace Services.Interfaces
     {
         List<CountryDto> GetCountries();
         CountryDto CreateCountry(CountryDto country);
-        CountryDto UpdateCompany(CountryDto country);
+        CountryDto UpdateCountry(CountryDto country);
         void DeleteCountry(int id);
     }
 }

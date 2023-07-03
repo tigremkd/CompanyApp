@@ -32,8 +32,8 @@ namespace Services.Implementations
         {
             try
             {
-                var company = _companyRepository.Get(contact.Company.CompanyId);
-                var country = _countryRepository.Get(contact.Country.CountryId);
+                var company = _companyRepository.Get(contact.CompanyId);
+                var country = _countryRepository.Get(contact.CountryId);
 
                 if(company is null || country is null)
                 {
@@ -41,9 +41,20 @@ namespace Services.Implementations
                 }
 
 
-                var model = _contactRepository.Create(_mapper.Map<Contact>(contact));
-                return _mapper.Map<ContactDto>(model);
+                var newContact = new Contact
+                {
+                    ContactName = contact.ContactName,
+                    CountryId = contact.CountryId,
+                    CompanyId = contact.CompanyId,
+                    Company = company,
+                    Country = country
+                };
+
+                var createdContact = _contactRepository.Create(newContact);
+                return _mapper.Map<ContactDto>(createdContact);
             }
+
+            // Exception handling should be from most specific > global
             catch (Exception ex)
             {
                 throw new Exception("Failed to create contact", ex);
@@ -69,7 +80,7 @@ namespace Services.Implementations
             }
         }
 
-        public List<ContactDto> FilterContacts(int countryId, int companyId)
+        public List<ContactDto> FilterContacts(int? countryId, int? companyId)
         {
             var contacts = _contactRepository.FilterContact(countryId, companyId);
             return _mapper.Map<List<ContactDto>>(contacts);

@@ -2,6 +2,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using WebApi.Utility;
 
 namespace CompanyWebApi
 {
@@ -22,6 +23,7 @@ namespace CompanyWebApi
 
             Repositories.DependencyRegister.Register(builder.Services, connectionString);
             Services.DependencyRegister.Register(builder.Services);
+            builder.Services.AddTransient<GlobalErrorHandlingMiddleware>();
 
 
             //services cors
@@ -42,6 +44,9 @@ namespace CompanyWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("CorsPolicy");
+            app.UseMiddleware(typeof(GlobalErrorHandlingMiddleware));
 
             app.UseAuthorization();
 

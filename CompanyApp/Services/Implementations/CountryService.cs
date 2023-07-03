@@ -26,6 +26,8 @@ namespace Services.Implementations
         {
             try
             {
+                // should add a method to check if the country with that name already exsists before creating a new one 
+
                 var model = _mapper.Map<Country>(country);
                 var createdCountry = _countryRepository.Create(model);
                 return _mapper.Map<CountryDto>(createdCountry);
@@ -68,7 +70,7 @@ namespace Services.Implementations
             }
         }
 
-        public CountryDto UpdateCompany(CountryDto country)
+        public CountryDto UpdateCountry(CountryDto country)
         {
             try
             {

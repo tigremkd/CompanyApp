@@ -54,16 +54,22 @@ namespace CompanyWebApi.Controllers
 
         [HttpGet("filter")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetFilteredContacts([FromQuery] int countryId, [FromQuery] int companyId)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetFilteredContacts([FromQuery] int? countryId, [FromQuery] int? companyId)
         {
+            var contacts = _contactService.FilterContacts(countryId, companyId);
+
             if (countryId <= 0 || companyId <= 0)
             {
-                return BadRequest("Invalid countryId or companyId"); // 400 Bad Request
+                return BadRequest("Invalid countryId or companyId");
             }
 
-            var contacts = _contactService.FilterContacts(countryId, companyId);
-            return Ok(contacts); // 200 OK
+            if (contacts.Count == 0)
+            {
+                return NotFound(); 
+            }
+
+            return Ok(contacts); 
         }
 
         [HttpGet("full-contacts")]
